@@ -11,8 +11,10 @@ def index():
 @app.route('/respond', methods=['POST'])
 def respond_post():
     res = (request.get_json(force=True)) #Get the json from dialogflow
-    print(jsonify(res))                 # To convert into json
-    return make_response(jsonify({"fulfillmentText":"hello from webhook"}))
+
+    if(res['queryResult']['intent']['displayName'] == 'Sentiment'):
+        print(jsonify(res))                 # To convert into json
+        return make_response(jsonify({"fulfillmentText":"THE INTENT MATCHES"}))
 
 if(__name__ == "__main__"):
     app.run(port=8080, debug=True)
